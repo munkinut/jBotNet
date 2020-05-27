@@ -2,7 +2,6 @@ package net.munki.jbotnet.client;
 
 import net.munki.jbotnet.interfaces.JBotNetServerInterface;
 
-import java.math.BigDecimal;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
