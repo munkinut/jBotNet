@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="JBotNetInterfaces">
+    <output-path>$PROJECT_DIR$/out/artifacts/JBotNetInterfaces</output-path>
+    <root id="archive" name="JBotNetInterfaces.jar">
+      <element id="module-output" name="jBotNetInterfaces" />
+    </root>
+  </artifact>
+</component>

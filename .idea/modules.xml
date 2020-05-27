@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JBotNetCommon/JBotNetCommon.iml" filepath="$PROJECT_DIR$/JBotNetCommon/JBotNetCommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jBotNetClient/jBotNetClient.iml" filepath="$PROJECT_DIR$/jBotNetClient/jBotNetClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jBotNetInterfaces/jBotNetInterfaces.iml" filepath="$PROJECT_DIR$/jBotNetInterfaces/jBotNetInterfaces.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jBotNetServer/jBotNetServer.iml" filepath="$PROJECT_DIR$/jBotNetServer/jBotNetServer.iml" />
+    </modules>
+  </component>
+</project>
