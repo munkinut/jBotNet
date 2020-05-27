@@ -1,0 +1,154 @@
+<project name="jBotNet" basedir=".">
+    <description>
+        Build file for jBotNet
+    </description>
+
+    <property name="version" value="0.2_devel"/>
+
+    <!-- set global properties for this build -->
+    <property name="clientArtifactName" value="JBotNetClient"/>
+    <property name="commonArtifactName" value="JBotNetCommon"/>
+    <property name="interfacesArtifactName" value="JBotNetInterfaces"/>
+    <property name="serverArtifactName" value="JBotNetServer"/>
+
+    <property name="clientModule" location="jBotNetClient"/>
+    <property name="commonModule" location="jBotNetCommon"/>
+    <property name="interfacesModule" location="jBotNetInterfaces"/>
+    <property name="serverModule" location="jBotNetServer"/>
+
+    <property name="clientSrc" location="${clientModule}/src"/>
+    <property name="commonSrc" location="${commonModule}/src"/>
+    <property name="interfacesSrc" location="${interfacesModule}/src"/>
+    <property name="serverSrc" location="${serverModule}/src"/>
+
+    <property name="build" location="out/production"/>
+    <property name="clientBuild" location="${build}/jBotNetClient"/>
+    <property name="commonBuild" location="${build}/jBotNetCommon"/>
+    <property name="interfacesBuild" location="${build}/jBotNetInterfaces"/>
+    <property name="serverBuild" location="${build}/jBotNetServer"/>
+
+    <property name="dist" location="out/artifacts"/>
+    <property name="clientDist" location="${dist}/JBotNetClient"/>
+    <property name="commonDist" location="${dist}/JBotNetCommon"/>
+    <property name="interfacesDist" location="${dist}/JBotNetInterfaces"/>
+    <property name="serverDist" location="${dist}/JBotNetServer"/>
+
+    <path id="client.build.class.path">
+        <pathelement location="${clientBuild}"/>
+    </path>
+
+    <path id="common.build.class.path">
+        <pathelement location="${commonBuild}"/>
+    </path>
+
+    <path id="interfaces.build.class.path">
+        <pathelement location="${interfacesBuild}"/>
+    </path>
+
+    <path id="server.build.class.path">
+        <pathelement location="${serverBuild}"/>
+    </path>
+
+    <target name="init">
+        <!-- Create the build directory structure used by compile -->
+    </target>
+
+    <target name="clientCompile" depends="init"
+            description="compile the source for the client module">
+        <javac includeantruntime="false" srcdir="${clientSrc}" destdir="${clientBuild}" classpathref="client.build.class.path"/>
+    </target>
+
+    <target name="commonCompile" depends="init"
+            description="compile the source for the common module">
+        <javac includeantruntime="false" srcdir="${commonSrc}" destdir="${commonBuild}" classpathref="common.build.class.path"/>
+    </target>
+
+    <target name="interfacesCompile" depends="init"
+            description="compile the source for the interfaces module">
+        <javac includeantruntime="false" srcdir="${interfacesSrc}" destdir="${interfacesBuild}" classpathref="interfaces.build.class.path"/>
+    </target>
+
+    <target name="serverCompile" depends="init"
+            description="compile the source for the server module">
+        <javac includeantruntime="false" srcdir="${serverSrc}" destdir="${serverBuild}" classpathref="server.build.class.path"/>
+    </target>
+
+    <target name="clientDist" depends="clientCompile"
+            description="generate the client distribution">
+        <mkdir dir="${clientDist}"/>
+
+        <jar jarfile="${clientDist}/${clientArtifactName}_${version}.jar"  manifest="${clientModule}/Manifest.mf">
+            <fileset dir="${clientBuild}"/>
+        </jar>
+    </target>
+
+    <target name="commonDist" depends="commonCompile"
+            description="generate the client distribution">
+        <mkdir dir="${commonDist}"/>
+
+        <jar jarfile="${commonDist}/${commonArtifactName}_${version}.jar"  manifest="${commonModule}/Manifest.mf">
+            <fileset dir="${commonBuild}"/>
+        </jar>
+    </target>
+
+    <target name="interfacesDist" depends="interfacesCompile"
+            description="generate the client distribution">
+        <mkdir dir="${interfacesDist}"/>
+
+        <jar jarfile="${interfacesDist}/${interfacesArtifactName}_${version}.jar"  manifest="${interfacesModule}/Manifest.mf">
+            <fileset dir="${clientBuild}"/>
+        </jar>
+    </target>
+
+    <target name="serverDist" depends="serverCompile"
+            description="generate the client distribution">
+        <mkdir dir="${serverDist}"/>
+
+        <jar jarfile="${serverDist}/${serverArtifactName}_${version}.jar"  manifest="${serverModule}/Manifest.mf">
+            <fileset dir="${serverBuild}"/>
+        </jar>
+    </target>
+
+    <target name="clean"
+            description="clean up">
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+
+    <path id="client.run.class.path">
+        <fileset dir="${clientDist}" includes="*.jar"/>
+    </path>
+
+    <path id="common.run.class.path">
+        <fileset dir="${commonDist}" includes="*.jar"/>
+    </path>
+
+    <path id="interfaces.run.class.path">
+        <fileset dir="${interfacesDist}" includes="*.jar"/>
+    </path>
+
+    <path id="server.run.class.path">
+        <fileset dir="${serverDist}" includes="*.jar"/>
+    </path>
+
+    <target name="run_client_jar" description="Runs the generated jar file." depends="clientDist">
+        <java fork="true" classpathref="client.run.class.path" jar="${clientDist}/${clientArtifactName}_${version}.jar"/>
+    </target>
+
+    <target name="run_server_jar" description="Runs the generated jar file." depends="serverDist">
+        <java fork="true" classpathref="server.run.class.path" jar="${serverDist}/${serverArtifactName}_${version}.jar"/>
+    </target>
+
+    <target name="dist" depends="interfacesDist,commonDist,serverDist,clientDist">
+
+    </target>
+
+    <target name="copy_serve_files" description="Copies files to be served." depends="dist">
+        <copy todir="${commonModule}/serve">
+            <file name="${clientBuild}/net/munki/jbotnet/client/JBot.class"/>
+            <file name="${interfacesDist}/${interfacesArtifactName}_${version}.jar"/>
+        </copy>
+    </target>
+
+</project>
