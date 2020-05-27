@@ -15,9 +15,11 @@ public class JBotNetClient {
             String name = "JBotNetServerInterface";
             Registry registry = LocateRegistry.getRegistry(args[0]);
             JBotNetServerInterface jBotNetServerInterface = (JBotNetServerInterface)registry.lookup(name);
-            JBot jBot = new JBot();
+            JBot jBot = new JBot("javamunk", "javamunk", "", "", "localhost", "#javamunk", "", 0);
             boolean b = jBotNetServerInterface.register(jBot);
-            System.out.println(b);
+            System.out.println("Registered = " + b);
+            b = jBotNetServerInterface.deregister(jBot);
+            System.out.println("Deregistered = " + b);
         } catch (Exception e) {
             System.err.println("JBotNetClient exception:");
             e.printStackTrace();
