@@ -183,7 +183,7 @@
 
     <target name="run_rmi_registry">
         <exec executable="cmd" spawn="true">
-            <env key="CLASSPATH" value="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient\;c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces.jar"/>
+            <env key="CLASSPATH" value="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient\;c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces_0.2_devel.jar"/>
             <arg value="/c"/>
             <arg value="start"/>
             <arg value="rmiregistry"/>
