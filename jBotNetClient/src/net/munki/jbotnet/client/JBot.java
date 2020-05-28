@@ -44,42 +44,42 @@ public class JBot implements JBotInterface, Serializable {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
     public String getNickname() {
-        return null;
+        return this.nickname;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return this.description;
     }
 
     @Override
     public String getOwnerEmail() {
-        return null;
+        return this.ownerEmail;
     }
 
     @Override
     public String getServer() {
-        return null;
+        return this.server;
     }
 
     @Override
     public String getChannel() {
-        return null;
+        return this.channel;
     }
 
     @Override
     public String getIp() {
-        return null;
+        return this.ip;
     }
 
     @Override
     public int getPort() {
-        return 0;
+        return this.port;
     }
 
     @Override
