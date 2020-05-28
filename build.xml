@@ -1,4 +1,4 @@
-<project name="jBotNet" basedir=".">
+<project name="jBotNet" basedir="." default="dist">
     <description>
         Build file for jBotNet
     </description>
@@ -98,7 +98,7 @@
             description="generate the client distribution">
         <mkdir dir="${interfacesDist}"/>
         <jar jarfile="${interfacesDist}/${interfacesArtifactName}_${version}.jar">
-            <fileset dir="${clientBuild}"/>
+            <fileset dir="${interfacesBuild}"/>
         </jar>
     </target>
 
@@ -118,7 +118,8 @@
     </target>
 
     <path id="client.run.class.path">
-        <fileset dir="${clientDist}" includes="*.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetclient\jbotnetclient_0.2_devel.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetinterfaces\jbotnetinterfaces_0.2_devel.jar"/>
     </path>
 
     <path id="common.run.class.path">
@@ -130,15 +131,29 @@
     </path>
 
     <path id="server.run.class.path">
-        <fileset dir="${serverDist}" includes="*.jar"/>
+        <!-- <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient"/> -->
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetclient\jbotnetclient_0.2_devel.jar"/>
+        <!-- <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetserver"/> -->
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetserver\jbotnetserver_0.2_devel.jar"/>
+        <!-- <pathelement location="c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces.jar"/> -->
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetinterfaces\jbotnetinterfaces_0.2_devel.jar"/>
     </path>
 
     <target name="run_client_jar" description="Runs the generated jar file." depends="clientDist">
-        <java fork="true" classpathref="client.run.class.path" jar="${clientDist}/${clientArtifactName}_${version}.jar"/>
+        <java fork="true" classpathref="client.run.class.path" classname="net.munki.jbotnet.client.JBotNetClient">
+            <arg value="localhost"/>
+            <jvmarg value="-Djava.rmi.server.codebase=http://localhost:8000/"/>
+            <jvmarg value="-Djava.security.policy=client.policy"/>
+        </java>
     </target>
 
     <target name="run_server_jar" description="Runs the generated jar file." depends="serverDist">
-        <java fork="true" classpathref="server.run.class.path" jar="${serverDist}/${serverArtifactName}_${version}.jar"/>
+        <!-- <java fork="true" classpathref="server.run.class.path" jar="${serverDist}/${serverArtifactName}_${version}.jar"> -->
+        <java fork="true" classpathref="server.run.class.path" classname="net.munki.jbotnet.server.JBotNetServer">
+            <jvmarg value="-Djava.rmi.server.codebase=http://localhost:8000/JBotNetInterfaces.jar"/>
+            <jvmarg value="-Djava.rmi.server.hostname=localhost"/>
+            <jvmarg value="-Djava.security.policy=server.policy"/>
+        </java>
     </target>
 
     <target name="dist" depends="interfacesDist,commonDist,serverDist,clientDist">
@@ -150,6 +165,29 @@
             <file name="${clientBuild}/net/munki/jbotnet/client/JBot.class"/>
             <file name="${interfacesDist}/${interfacesArtifactName}_${version}.jar"/>
         </copy>
+    </target>
+
+    <target name="run_fileserver">
+        <exec executable="cmd" spawn="true">
+            <arg value="/c"/>
+            <arg value="python"/>
+            <arg value="-m"/>
+            <arg value="http.server"/>
+            <arg value="8000"/>
+            <arg value="--bind"/>
+            <arg value="127.0.0.1"/>
+            <arg value="--directory"/>
+            <arg value="c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve"/>
+        </exec>
+    </target>
+
+    <target name="run_rmi_registry">
+        <exec executable="cmd" spawn="true">
+            <env key="CLASSPATH" value="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient\;c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces.jar"/>
+            <arg value="/c"/>
+            <arg value="start"/>
+            <arg value="rmiregistry"/>
+        </exec>
     </target>
 
 </project>
