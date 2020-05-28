@@ -35,6 +35,7 @@
 
     <path id="client.build.class.path">
         <pathelement location="${clientBuild}"/>
+        <pathelement location="${interfacesBuild}"/>
     </path>
 
     <path id="common.build.class.path">
@@ -47,13 +48,17 @@
 
     <path id="server.build.class.path">
         <pathelement location="${serverBuild}"/>
+        <pathelement location="${interfacesBuild}"/>
     </path>
 
-    <target name="init">
-        <!-- Create the build directory structure used by compile -->
+    <target name="init" description="create the build directory structure used by compile">
+        <mkdir dir="${interfacesBuild}"/>
+        <mkdir dir="${clientBuild}"/>
+        <mkdir dir="${commonBuild}"/>
+        <mkdir dir="${serverBuild}"/>
     </target>
 
-    <target name="clientCompile" depends="init"
+    <target name="clientCompile" depends="init,interfacesCompile"
             description="compile the source for the client module">
         <javac includeantruntime="false" srcdir="${clientSrc}" destdir="${clientBuild}" classpathref="client.build.class.path"/>
     </target>
@@ -68,7 +73,7 @@
         <javac includeantruntime="false" srcdir="${interfacesSrc}" destdir="${interfacesBuild}" classpathref="interfaces.build.class.path"/>
     </target>
 
-    <target name="serverCompile" depends="init"
+    <target name="serverCompile" depends="init,interfacesCompile"
             description="compile the source for the server module">
         <javac includeantruntime="false" srcdir="${serverSrc}" destdir="${serverBuild}" classpathref="server.build.class.path"/>
     </target>
@@ -76,7 +81,6 @@
     <target name="clientDist" depends="clientCompile"
             description="generate the client distribution">
         <mkdir dir="${clientDist}"/>
-
         <jar jarfile="${clientDist}/${clientArtifactName}_${version}.jar"  manifest="${clientModule}/Manifest.mf">
             <fileset dir="${clientBuild}"/>
         </jar>
@@ -85,8 +89,7 @@
     <target name="commonDist" depends="commonCompile"
             description="generate the client distribution">
         <mkdir dir="${commonDist}"/>
-
-        <jar jarfile="${commonDist}/${commonArtifactName}_${version}.jar"  manifest="${commonModule}/Manifest.mf">
+        <jar jarfile="${commonDist}/${commonArtifactName}_${version}.jar">
             <fileset dir="${commonBuild}"/>
         </jar>
     </target>
@@ -94,8 +97,7 @@
     <target name="interfacesDist" depends="interfacesCompile"
             description="generate the client distribution">
         <mkdir dir="${interfacesDist}"/>
-
-        <jar jarfile="${interfacesDist}/${interfacesArtifactName}_${version}.jar"  manifest="${interfacesModule}/Manifest.mf">
+        <jar jarfile="${interfacesDist}/${interfacesArtifactName}_${version}.jar">
             <fileset dir="${clientBuild}"/>
         </jar>
     </target>
@@ -103,7 +105,6 @@
     <target name="serverDist" depends="serverCompile"
             description="generate the client distribution">
         <mkdir dir="${serverDist}"/>
-
         <jar jarfile="${serverDist}/${serverArtifactName}_${version}.jar"  manifest="${serverModule}/Manifest.mf">
             <fileset dir="${serverBuild}"/>
         </jar>
