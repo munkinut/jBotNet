@@ -1,20 +1,22 @@
 package net.munki.jbotnet.interfaces;
- 
-public interface JBotInterface {
 
-    boolean execute();
-    String getName();
-    String getNickname();
-    String getDescription();
-    String getOwnerEmail();
-    String getServer();
-    String getChannel();
-    String getIp();
-    int getPort();
-    boolean setNickname(String nickname);
-    boolean setDescription(String description);
-    boolean setOwnerEmail(String ownerEmail);
-    boolean setServer(String server);
-    boolean setChannel(String channel);
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface JBotInterface extends Remote {
+
+    String getRealName() throws RemoteException;
+    String getNickname() throws RemoteException;
+    String getDescription() throws RemoteException;
+    String getOwnerEmail() throws RemoteException;
+    String getServer() throws RemoteException;
+    String getChannel() throws RemoteException;
+    String getIp() throws RemoteException;
+    int getPort() throws RemoteException;
+    void setNickname(String nickname) throws RemoteException;
+    void setDescription(String description) throws RemoteException;
+    void setOwnerEmail(String ownerEmail) throws RemoteException;
+    void setServer(String server) throws RemoteException;
+    void setChannel(String channel) throws RemoteException;
 
 }

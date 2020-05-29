@@ -38,12 +38,7 @@ public class JBot implements JBotInterface, Serializable {
     }
 
     @Override
-    public boolean execute() {
-        return false;
-    }
-
-    @Override
-    public String getName() {
+    public String getRealName() {
         return this.name;
     }
 
@@ -83,28 +78,28 @@ public class JBot implements JBotInterface, Serializable {
     }
 
     @Override
-    public boolean setNickname(String nickname) {
-        return false;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Override
-    public boolean setDescription(String description) {
-        return false;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
-    public boolean setOwnerEmail(String ownerEmail) {
-        return false;
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     @Override
-    public boolean setServer(String server) {
-        return false;
+    public void setServer(String server) {
+        this.server = server;
     }
 
     @Override
-    public boolean setChannel(String channel) {
-        return false;
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 
     @Override

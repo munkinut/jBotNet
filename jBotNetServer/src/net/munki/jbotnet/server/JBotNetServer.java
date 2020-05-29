@@ -3,6 +3,7 @@ package net.munki.jbotnet.server;
 import net.munki.jbotnet.interfaces.JBotInterface;
 import net.munki.jbotnet.interfaces.JBotNetServerInterface;
 
+import java.rmi.NotBoundException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import java.rmi.RemoteException;
@@ -21,12 +22,31 @@ public class JBotNetServer implements JBotNetServerInterface {
 
     @Override
     public boolean register(JBotInterface jBotInterface) throws RemoteException {
+        jBotInterface.setDescription("Registered");
         return jBots.addIfAbsent(jBotInterface);
     }
 
     @Override
     public boolean deregister(JBotInterface jBotInterface) throws RemoteException {
         return jBots.remove(jBotInterface);
+    }
+
+    @Override
+    public CopyOnWriteArrayList<JBotInterface> getBots() throws RemoteException {
+        return jBots;
+    }
+
+    @Override
+    public JBotInterface getABot(String name) throws RemoteException {
+        //Registry registry = LocateRegistry.getRegistry("localhost");
+        //try {
+        //    JBotInterface jif = (JBotInterface)registry.lookup(name);
+        //    return jif;
+        //} catch (NotBoundException e) {
+        //    throw new RemoteException(e.getMessage());
+        //}
+        if (this.jBots.isEmpty()) throw new RemoteException("Bots list was empty.");
+        return jBots.get(0);
     }
 
     public static void main(String[] args) {
@@ -38,7 +58,6 @@ public class JBotNetServer implements JBotNetServerInterface {
             JBotNetServerInterface jBotNetServer = new JBotNetServer();
             JBotNetServerInterface stub =
                     (JBotNetServerInterface) UnicastRemoteObject.exportObject(jBotNetServer, 0);
-            //Registry registry = LocateRegistry.createRegistry(1099);
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind(name, stub);
             System.out.println("JBotNetServer bound");
