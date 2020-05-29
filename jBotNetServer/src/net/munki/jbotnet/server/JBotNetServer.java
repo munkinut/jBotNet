@@ -3,7 +3,6 @@ package net.munki.jbotnet.server;
 import net.munki.jbotnet.interfaces.JBotInterface;
 import net.munki.jbotnet.interfaces.JBotNetServerInterface;
 
-import java.rmi.NotBoundException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import java.rmi.RemoteException;

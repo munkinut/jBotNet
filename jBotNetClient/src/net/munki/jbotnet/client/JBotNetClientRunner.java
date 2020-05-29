@@ -2,7 +2,6 @@ package net.munki.jbotnet.client;
 
 import net.munki.jbotnet.interfaces.JBotInterface;
 
-import java.rmi.RemoteException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class JBotNetClientRunner {
@@ -18,21 +17,18 @@ public class JBotNetClientRunner {
             jbnc = new JBotNetClient(args[0]);
             CopyOnWriteArrayList<JBotInterface> botList = new CopyOnWriteArrayList<>();
 
-            for(int i = 0; i < 3; i++) {
+            String oldMessage = "";
+            String botName = new StringBuilder("javamunk").toString();
+            JBotInterface jBot = new JBot(botName, botName, "", "", "localhost", "#javamunk", "", 0, oldMessage);
 
-                String botName = new StringBuilder("javamunk_").append(i).toString();
-                JBotInterface jBot = new JBot(botName, botName, "", "", "localhost", "#javamunk", "", 0);
+            jbnc.exportBot(jBot);
 
-                jbnc.exportBot(jBot);
+            if (jbnc.register(jBot)) botList.add(jBot);
 
-                if (jbnc.register(jBot)) botList.add(jBot);;
+            jbnc.waitForMessages(jBot, oldMessage);
 
-            }
+            if (jbnc.deregister(jBot)) botList.remove(jBot);
 
-            for (JBotInterface jb : botList) {
-                jbnc.deregister(jb);
-                botList.remove(jb);
-            }
 
         } catch (JBotNetClientException e) {
             System.err.println(e.getMessage());

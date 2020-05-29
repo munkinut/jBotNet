@@ -17,6 +17,7 @@ public class JBot implements JBotInterface, Serializable {
     private String channel;
     private String ip;
     private int port;
+    private String message;
 
     public JBot(String name,
                 String nickname,
@@ -25,7 +26,8 @@ public class JBot implements JBotInterface, Serializable {
                 String server,
                 String channel,
                 String ip,
-                int port) {
+                int port,
+                String message) {
         super();
         this.name = name;
         this.nickname = nickname;
@@ -35,6 +37,7 @@ public class JBot implements JBotInterface, Serializable {
         this.channel = channel;
         this.ip = ip;
         this.port = port;
+        this.message = message;
     }
 
     @Override
@@ -78,6 +81,11 @@ public class JBot implements JBotInterface, Serializable {
     }
 
     @Override
+    public String getMessage() {
+        return this.message;
+    }
+
+    @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -100,6 +108,11 @@ public class JBot implements JBotInterface, Serializable {
     @Override
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    @Override
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

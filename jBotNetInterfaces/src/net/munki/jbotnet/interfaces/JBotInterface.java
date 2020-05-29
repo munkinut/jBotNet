@@ -13,10 +13,12 @@ public interface JBotInterface extends Remote {
     String getChannel() throws RemoteException;
     String getIp() throws RemoteException;
     int getPort() throws RemoteException;
+    String getMessage() throws RemoteException;
     void setNickname(String nickname) throws RemoteException;
     void setDescription(String description) throws RemoteException;
     void setOwnerEmail(String ownerEmail) throws RemoteException;
     void setServer(String server) throws RemoteException;
     void setChannel(String channel) throws RemoteException;
+    void setMessage(String message) throws RemoteException;
 
 }
