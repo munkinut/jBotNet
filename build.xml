@@ -3,7 +3,7 @@
         Build file for jBotNet
     </description>
 
-    <property name="version" value="0.2_devel"/>
+    <property name="version" value="0.3_devel"/>
 
     <!-- set global properties for this build -->
     <property name="clientArtifactName" value="JBotNetClient"/>
@@ -120,8 +120,8 @@
     </target>
 
     <path id="client.run.class.path">
-        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetclient\jbotnetclient_0.2_devel.jar"/>
-        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetinterfaces\jbotnetinterfaces_0.2_devel.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetclient\jbotnetclient_${version}.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetinterfaces\jbotnetinterfaces_${version}.jar"/>
     </path>
 
     <path id="common.run.class.path">
@@ -134,11 +134,11 @@
 
     <path id="server.run.class.path">
         <!-- <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient"/> -->
-        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetclient\jbotnetclient_0.2_devel.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetclient\jbotnetclient_${version}.jar"/>
         <!-- <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetserver"/> -->
-        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetserver\jbotnetserver_0.2_devel.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetserver\jbotnetserver_${version}.jar"/>
         <!-- <pathelement location="c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces.jar"/> -->
-        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetinterfaces\jbotnetinterfaces_0.2_devel.jar"/>
+        <pathelement location="c:\users\warren\ideaprojects\jbotnet\out\artifacts\jbotnetinterfaces\jbotnetinterfaces_${version}.jar"/>
     </path>
 
     <target name="run_client_jar" description="Runs the generated jar file." depends="clientDist">
@@ -185,7 +185,7 @@
 
     <target name="run_rmi_registry">
         <exec executable="cmd" spawn="true">
-            <env key="CLASSPATH" value="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient\;c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces_0.2_devel.jar"/>
+            <env key="CLASSPATH" value="c:\users\warren\ideaprojects\jbotnet\out\production\jbotnetclient\;c:\users\warren\ideaprojects\jbotnet\jbotnetcommon\serve\jbotnetinterfaces_${version}.jar"/>
             <arg value="/c"/>
             <arg value="start"/>
             <arg value="rmiregistry"/>
