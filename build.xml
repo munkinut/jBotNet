@@ -58,6 +58,8 @@
         <mkdir dir="${serverBuild}"/>
     </target>
 
+    <target name="prepare_to_run" depends="clean,dist,copy_serve_files"/>
+
     <target name="clientCompile" depends="init,interfacesCompile"
             description="compile the source for the client module">
         <javac includeantruntime="false" srcdir="${clientSrc}" destdir="${clientBuild}" classpathref="client.build.class.path"/>
